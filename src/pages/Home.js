@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { loadGames } from "../actions/gamesActions";
 import Game from "../components/Game";
+import GameDetail from "../components/GameDetail";
+import { useLocation } from "react-router-dom";
 
 const GameList = styled(motion.div)`
   padding: 0rem 5rem;
@@ -21,6 +23,8 @@ const Games = styled(motion.div)`
 `;
 
 const Home = () => {
+  const location = useLocation();
+  const pathId = location.pathname.split("/")[2];
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadGames());
@@ -32,6 +36,7 @@ const Home = () => {
 
   return (
     <GameList>
+      {pathId && <GameDetail />}
       <h2>Upcoming Games</h2>
       <Games>
         {upcomingGames.map((game) => (
